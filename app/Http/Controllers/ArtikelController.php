@@ -14,7 +14,10 @@ class ArtikelController extends Controller
      */
     public function index()
     {
-        $data = \DB::table('artikel')->where('id_penulis', Session::get('id'))->orderBy('id', 'desc')->get();
+        if (Session::get('role') == 'admin')
+            $data = \DB::table('artikel')->orderBy('id', 'desc')->get();
+        else
+            $data = \DB::table('artikel')->where('id_penulis', Session::get('id'))->orderBy('id', 'desc')->get();
 
         return view('artikel.index', compact('data'));
     }

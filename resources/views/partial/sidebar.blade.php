@@ -40,12 +40,14 @@
             <span>Komentar</span></a>
     </li>
 
+    @if (Session::get('role') == 'admin')
     <!-- Nav Item - Penulis -->
-    <li class="nav-item">
-        <a class="nav-link" href="tables.html">
+    <li class="nav-item @if (Request::segment(1) == 'penulis') active @endif">
+        <a class="nav-link" href="{{ route('penulis.index') }}">
             <i class="fas fa-fw fa-table"></i>
             <span>Penulis</span></a>
     </li>
+    @endif
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">

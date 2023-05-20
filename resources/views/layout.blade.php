@@ -28,7 +28,9 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
+        @if (Session::has('id'))
         @include('partial.sidebar')
+        @endif
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -42,6 +44,11 @@
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
+                <div class="row">
+                    <div class="col-xl-12 col-lg-11 m-4">
+                        @include('partial.alert')
+                    </div>
+                </div>
                 @yield('content')
                 <!-- /.container-fluid -->
 
@@ -75,15 +82,15 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Yakin akan mengakhiri?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-body">Pilih "Logout" untuk mengakhiri sesi ini.</div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                    <a class="btn btn-primary" href="{{ route('logout') }}">Logout</a>
                 </div>
             </div>
         </div>

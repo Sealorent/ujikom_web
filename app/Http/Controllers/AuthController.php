@@ -31,6 +31,7 @@ class AuthController extends Controller
                 if ($request->password == $penulis->password) {
                     Session::put('id', $penulis->id);
                     Session::put('username', $penulis->username);
+                    Session::put('role', 'penulis');
                     return redirect('/dashboard');
                 }
                 else
@@ -63,11 +64,12 @@ class AuthController extends Controller
         ]);
 
         try {
-            $admin = DB::table('admin')->where('username', $request->username)->first();
+            $admin = \DB::table('admin')->where('username', $request->username)->first();
 
             if ($admin) {
                 if ($request->password == $admin->password) {
                     Session::put('username', $admin->username);
+                    Session::put('role', 'admin');
                     return redirect('/dashboard');
                 }
                 else
@@ -82,7 +84,7 @@ class AuthController extends Controller
         }
     }
 
-    public function registerPenulis()
+    public function register()
     {
         return view('auth.register');
     }
@@ -108,11 +110,26 @@ class AuthController extends Controller
                 'password' => $request->password,
             ]);
 
-            return redirect('/login');
+            return redirect('/login')->withStatus('Berhasil mendaftar, silahkan login');
         } catch (\Exception $e) {
             return back()->withError('Terjadi kesalahan');
         } catch (\Illuminate\Database\QueryException $e) {
             return back()->withError('Terjadi kesalahan pada database');
+        }
+    }
+
+    public function logout()
+    {
+        try {
+            $isAdmin = Session::get('role') == 'admin';
+            Session::flush();
+
+            if ($isAdmin)
+                return redirect('/login-admin');
+            else
+                return redirect('/login');
+        } catch (\Exception $th) {
+            return back()->withError('Terjadi kesalahan');
         }
     }
 }

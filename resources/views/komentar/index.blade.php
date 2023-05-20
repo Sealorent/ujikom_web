@@ -37,7 +37,7 @@
                                         <td>{{ $item->email }}</td>
                                         <td>{{ $item->isi_komentar }}</td>
                                         <td class="form-inline">
-                                            <form action="{{ route('komentar.destroy', $item->id) }}" method="POST">
+                                            <form action="{{ route('artikel.destroy', $item->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Anda yakin akan menghapus data ini?')">
@@ -48,7 +48,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="6" class="text-center">
+                                        <td colspan="5" class="text-center">
                                             Maaf, data belum tersedia.
                                         </td>
                                     </tr>
