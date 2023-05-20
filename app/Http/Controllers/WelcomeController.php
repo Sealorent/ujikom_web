@@ -6,9 +6,12 @@ use Illuminate\Http\Request;
 
 class WelcomeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $data = \DB::table('artikel')->orderBy('id', 'desc')->get();
+        if ($request->q)
+            $data = \DB::table('artikel')->where('judul_artikel', 'LIKE', '%'.$request->q.'%')->orderBy('judul_artikel')->get();
+        else
+            $data = \DB::table('artikel')->orderBy('judul_artikel')->get();
 
         return view('welcome', compact('data'));
     }

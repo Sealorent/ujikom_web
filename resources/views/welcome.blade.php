@@ -9,6 +9,10 @@
 
     <!-- Content Row -->
     <div class="row">
+        <form action="" method="get">
+            <input type="search" name="q" id="q">
+            <input type="submit" value="cari">
+        </form>
         <div class="col-xl-12 col-lg-11">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
