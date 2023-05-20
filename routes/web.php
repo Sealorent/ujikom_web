@@ -3,6 +3,7 @@
 use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\KomentarController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,3 +30,5 @@ Route::post('/register', [AuthController::class, 'storeRegisterPenulis'])->name(
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::resource('/artikel', ArtikelController::class);
+Route::get('/komentar', [KomentarController::class, 'index'])->name('komentar.index');
+Route::delete('/komentar/{id}', [KomentarController::class, 'destroy'])->name('komentar.destroy');
