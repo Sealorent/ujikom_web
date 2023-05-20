@@ -28,7 +28,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        @if (Session::has('id'))
+        @if (Session::has('username'))
         @include('partial.sidebar')
         @endif
         <!-- End of Sidebar -->

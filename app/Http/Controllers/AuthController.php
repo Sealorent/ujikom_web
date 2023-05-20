@@ -28,14 +28,18 @@ class AuthController extends Controller
             $penulis = \DB::table('penulis')->where('username', $request->username)->first();
 
             if ($penulis) {
-                if ($request->password == $penulis->password) {
-                    Session::put('id', $penulis->id);
-                    Session::put('username', $penulis->username);
-                    Session::put('role', 'penulis');
-                    return redirect('/dashboard');
+                if ($penulis->active) {
+                    if ($request->password == $penulis->password) {
+                        Session::put('id', $penulis->id);
+                        Session::put('username', $penulis->username);
+                        Session::put('role', 'penulis');
+                        return redirect('/dashboard');
+                    }
+                    else
+                        return back()->withError('Password yang Anda masukkan tidak sesuai.');
                 }
                 else
-                    return back()->withError('Password yang Anda masukkan tidak sesuai.');
+                    return back()->withError('Maaf, akun anda dinonaktifkan, silahkan hubungi admin.');
             }
             else
                 return back()->withError('Akun tidak ditemukan.');
