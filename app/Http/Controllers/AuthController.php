@@ -9,7 +9,7 @@ class AuthController extends Controller
 {
     public function index()
     {
-        return view('auth.login');
+        return view('pages.auth.login-penulis');
     }
 
     public function storeLoginPenulis(Request $request)
@@ -34,14 +34,11 @@ class AuthController extends Controller
                         Session::put('username', $penulis->username);
                         Session::put('role', 'penulis');
                         return redirect('/dashboard');
-                    }
-                    else
+                    } else
                         return back()->withError('Password yang Anda masukkan tidak sesuai.');
-                }
-                else
+                } else
                     return back()->withError('Maaf, akun anda dinonaktifkan, silahkan hubungi admin.');
-            }
-            else
+            } else
                 return back()->withError('Akun tidak ditemukan.');
         } catch (\Exception $e) {
             return back()->withError('Terjadi kesalahan');
@@ -52,11 +49,12 @@ class AuthController extends Controller
 
     public function indexAdmin()
     {
-        return view('auth.login-admin');
+        return view('pages.auth.login-admin');
     }
 
     public function storeLoginAdmin(Request $request)
     {
+        // return $request;
         $this->validate($request, [
             'username' => 'required',
             'password' => 'required'
@@ -75,11 +73,9 @@ class AuthController extends Controller
                     Session::put('username', $admin->username);
                     Session::put('role', 'admin');
                     return redirect('/dashboard');
-                }
-                else
+                } else
                     return back()->withError('Password yang Anda masukkan tidak sesuai.');
-            }
-            else
+            } else
                 return back()->withError('Akun tidak ditemukan.');
         } catch (\Exception $e) {
             return back()->withError('Terjadi kesalahan');
@@ -90,7 +86,7 @@ class AuthController extends Controller
 
     public function register()
     {
-        return view('auth.register');
+        return view('pages.auth.register');
     }
 
     public function storeRegisterPenulis(Request $request)

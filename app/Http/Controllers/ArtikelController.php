@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
+
 
 class ArtikelController extends Controller
 {
@@ -19,7 +21,7 @@ class ArtikelController extends Controller
         else
             $data = \DB::table('artikel')->where('id_penulis', Session::get('id'))->orderBy('id', 'desc')->get();
 
-        return view('artikel.index', compact('data'));
+        return view('pages.artikel.index', compact('data'));
     }
 
     /**
@@ -29,7 +31,7 @@ class ArtikelController extends Controller
      */
     public function create()
     {
-        return view('artikel.create');
+        return view('pages.artikel.create');
     }
 
     /**
@@ -50,15 +52,17 @@ class ArtikelController extends Controller
             'konten' => 'Konten'
         ]);
 
+        // return Session::get('id');
         try {
-            \DB::table('artikel')->insert([
+            DB::table('artikel')->insert([
                 'judul_artikel' => $request->judul,
                 'isi_artikel' => $request->konten,
                 'id_penulis' => Session::get('id'),
                 'tanggal' => date('Y-m-d')
             ]);
 
-            return redirect('/artikel')->withStatus('Berhasil menyimpan data');
+            // return $request;
+            return redirect('/artikel')->withSuccess('Berhasil menyimpan data');
         } catch (\Exception $e) {
             return back()->withError('Terjadi kesalahan');
         } catch (\Illuminate\Database\QueryException $e) {
@@ -87,8 +91,8 @@ class ArtikelController extends Controller
     {
         try {
             $data = \DB::table('artikel')->where('id', $id)->first();
-
-            return view('artikel.edit', compact('data'));
+            // return $data;
+            return view('pages.artikel.edit', compact('data'));
         } catch (\Exception $e) {
             return back()->withError('Terjadi kesalahan');
         } catch (\Illuminate\Database\QueryException $e) {

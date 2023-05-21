@@ -17,12 +17,11 @@ class KomentarController extends Controller
                 'k.email',
                 'k.isi_komentar'
             )
-            ->join('artikel AS a', 'a.id', 'detail.id_artikel')
-            ->join('komentar AS k', 'k.id', 'detail.id_komentar')
-            ->orderBy('detail.id', 'desc')
-            ->get();
-        }
-        else {
+                ->join('artikel AS a', 'a.id', 'detail.id_artikel')
+                ->join('komentar AS k', 'k.id', 'detail.id_komentar')
+                ->orderBy('detail.id', 'desc')
+                ->get();
+        } else {
             $data = \DB::table('detail')->select(
                 'detail.*',
                 'a.judul_artikel',
@@ -30,13 +29,13 @@ class KomentarController extends Controller
                 'k.email',
                 'k.isi_komentar'
             )
-            ->join('artikel AS a', 'a.id', 'detail.id_artikel')
-            ->join('komentar AS k', 'k.id', 'detail.id_komentar')
-            ->where('a.id_penulis', Session::get('id'))
-            ->orderBy('detail.id', 'desc')
-            ->get();
+                ->join('artikel AS a', 'a.id', 'detail.id_artikel')
+                ->join('komentar AS k', 'k.id', 'detail.id_komentar')
+                ->where('a.id_penulis', Session::get('id'))
+                ->orderBy('detail.id', 'desc')
+                ->get();
         }
 
-        return view('komentar.index', compact('data'));
+        return view('pages.komentar.index', compact('data'));
     }
 }

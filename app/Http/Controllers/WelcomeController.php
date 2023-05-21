@@ -9,19 +9,21 @@ class WelcomeController extends Controller
     public function index(Request $request)
     {
         if ($request->q)
-            $data = \DB::table('artikel')->where('judul_artikel', 'LIKE', '%'.$request->q.'%')->orderBy('judul_artikel')->get();
+            $data = \DB::table('artikel')->where('judul_artikel', 'LIKE', '%' . $request->q . '%')->orderBy('judul_artikel')->get();
         else
             $data = \DB::table('artikel')->orderBy('judul_artikel')->get();
 
-        return view('welcome', compact('data'));
+        return view('pages.pembaca.index', compact('data'));
+        // return view('welcome', compact('data'));
     }
 
     public function show($id)
     {
         try {
             $data = \DB::table('artikel')->where('id', $id)->first();
+            $listKomentar = \DB::table('detail')->where('id_artikel', $id)->join('komentar', 'detail.id_komentar', 'komentar.id')->get();
 
-            return view('detail', compact('data'));
+            return view('pages.pembaca.detail', compact('data', 'listKomentar'));
         } catch (\Exception $e) {
             return $e->getMessage();
             return back()->withError('Terjadi kesalahan');
@@ -46,7 +48,7 @@ class WelcomeController extends Controller
 
         try {
             \DB::beginTransaction();
-            
+
             $komentar = \DB::table('komentar')->insertGetId([
                 'nama' => $request->nama,
                 'email' => $request->email,

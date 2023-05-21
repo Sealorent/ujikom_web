@@ -11,7 +11,7 @@ class PenulisController extends Controller
         try {
             $data = \DB::table('penulis')->orderBy('username')->get();
 
-            return view('penulis.index', compact('data'));
+            return view('pages.penulis.index', compact('data'));
         } catch (\Exception $e) {
             return $e->getMessage();
             return back()->withError('Terjadi kesalahan');
